@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.LocationFragment">
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/mv_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.baidu.mapapi.map.MapView>
+    <Spinner
+        android:id="@+id/sp_center"
+        android:layout_width="78dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"/>
+    <Spinner
+        android:id="@+id/sp_showMode"
+        android:layout_width="78dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="55dp"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"/>
+    <CheckBox
+        android:id="@+id/cb_shareSwitch"
+        android:layout_width="78dp"
+        android:layout_height="28dp"
+        android:background="@color/white"
+        android:layout_marginTop="85dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/shareSwitch"
+        android:textSize="10sp"
+        android:textColor="@color/blue"
+        android:layout_gravity="right|top"/>
+</FrameLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TalkingRoomActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_friendsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/half_yellow"
+            app:navigationIcon="@drawable/ic_action_back"
+            app:title="@string/back"
+            app:titleTextColor="@color/half_blue" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_margin="1dp"/>
+        <ListView
+            android:id="@+id/lv_talkingContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:divider="@color/black"
+            android:dividerHeight="1px"
+            android:padding="3dp"
+            android:headerDividersEnabled="true"
+            android:footerDividersEnabled="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_gravity="center"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_margin="5dp"
+                android:text="发送"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:background="@color/yellow"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

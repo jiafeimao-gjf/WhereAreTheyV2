@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">他们在哪？</string>
+
+    <string name="developer">开发者：加菲猫</string>
+    <string name="version">版本：2.1.2</string>
+
+
+    <string name="menu_location">位置</string>
+    <string name="menu_message">消息</string>
+    <string name="menu_myself">我</string>
+
+    <string name="userName">用户：你的昵称</string>
+    <string name="icon">icon</string>
+    <string name="login_button1">去登录</string>
+    <string name="login_button">登录</string>
+    <string name="logout_button">注销</string>
+
+    <string name="changeUserName">›››　修改昵称</string>
+    <string name="changePassword">›››　修改密码</string>
+    <string name="addFriendByName">›››　通过ID加好友</string>
+    <string name="displayFriends">›››　查看好友</string>
+    <string name="settings">›››　设置</string>
+
+    <string name="loginPage">登录</string>
+    <string name="registerPage">注册</string>
+    <string name="settingsPage">设置</string>
+    <string name="back">返回</string>
+    <string name="forgetPwdPage">忘记密码</string>
+    <string name="changePwd">修改密码</string>
+    <string name="yourId">ID</string>
+    <string name="idHint">仅由英文和数字组成</string>
+    <string name="yourPassword">密码</string>
+    <string name="yourNewPwd">新密码：</string>
+    <string name="pwdHint">仅由英文和数字以及特殊字符组成</string>
+    <string name="yourName">昵称</string>
+    <string name="nameHint">任何字符</string>
+    <string name="register_button">注册新用户</string>
+    <string name="forgetPwd_button">忘记密码</string>
+    <string name="forgetOldPwd_button">忘记旧密码</string>
+    <string name="pwdProtectQ">密保问题</string>
+    <string name="pwdProtectA">答案</string>
+    <string name="chooseQ">请选择问题</string>
+    <string name="pwdPtAHint">写入你的答案</string>
+    <string name="testA">找回密码</string>
+    <string name="conform">确认重置</string>
+    <string name="yourNewPwdAgain">再次输入</string>
+    <string name="locationFre">›››　设置位置发送和接受周期</string>
+    <string name="FreInputHint">5s - 60s</string>
+    <string name="FreUnit">秒</string>
+    <string name="report">›››　向开发者反馈信息</string>
+    <string name="about">›››　关于</string>
+
+    <string name="help">帮助</string>
+    <string name="string_help_text">请，允许所有权限吧</string>
+    <string name="quit">退出</string>
+
+    <string name="delete">删除</string>
+    <string name="receive">获取在线好友位置</string>
+    <string name="all">刷新好友</string>
+    <string name="myself">仅自己</string>
+    <string name="shareSwitch">位置共享</string>
+    <string name="yourMessage">　你的消息</string>
+    <string name="yourFriends">你的朋友们</string>
+
+
+</resources>

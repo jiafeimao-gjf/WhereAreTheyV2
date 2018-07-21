@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/half_yellow"
+            app:navigationIcon="@drawable/ic_action_back"
+            app:title="@string/settingsPage"
+            app:titleTextColor="@color/half_blue" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_margin="1dp"/>
+
+        <Button
+            android:id="@+id/btn_locationFre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="start|center"
+            android:padding="3dp"
+            android:text="@string/locationFre"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_margin="3dp"/>
+        <Button
+            android:id="@+id/btn_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="start|center"
+            android:padding="3dp"
+            android:text="@string/report"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_margin="3dp"/>
+
+        <Button
+            android:id="@+id/btn_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="start|center"
+            android:padding="3dp"
+            android:text="@string/about"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
