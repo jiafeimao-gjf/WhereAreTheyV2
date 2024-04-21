@@ -1,4 +1,4 @@
-package com.gjf.wherearetheyv2.adapter;
+package com.gjf.wherearethey_v2.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
