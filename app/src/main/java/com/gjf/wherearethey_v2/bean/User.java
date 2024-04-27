@@ -89,9 +89,9 @@ public class User {
      */
     public void encrypt(){
         try {
-            this.password = AesUtil.encrypt("wat",this.password);
-            this.pwdProtectA = AesUtil.encrypt("wat",this.pwdProtectA);
-            this.userType = AesUtil.encrypt("wat",this.userType);
+//            this.password = AesUtil.encrypt("wat",this.password);
+//            this.pwdProtectA = AesUtil.encrypt("wat",this.pwdProtectA);
+//            this.userType = AesUtil.encrypt("wat",this.userType);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -102,9 +102,9 @@ public class User {
      */
     public void decrypt(){
         try {
-            this.password = AesUtil.decrypt("wat",this.password);
-            this.pwdProtectA = AesUtil.decrypt("wat",this.pwdProtectA);
-            this.userType = AesUtil.decrypt("wat",this.userType);
+//            this.password = AesUtil.decrypt("wat",this.password);
+//            this.pwdProtectA = AesUtil.decrypt("wat",this.pwdProtectA);
+//            this.userType = AesUtil.decrypt("wat",this.userType);
         }catch (Exception e){
             e.printStackTrace();
         }

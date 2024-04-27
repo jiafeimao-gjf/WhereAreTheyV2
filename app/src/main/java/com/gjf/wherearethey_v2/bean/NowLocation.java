@@ -80,7 +80,7 @@ public class NowLocation {
      */
     public void encrypt(){
         try{
-            this.locationDesc = AesUtil.encrypt("wat",this.locationDesc);
+//            this.locationDesc = AesUtil.encrypt("wat",this.locationDesc);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class NowLocation {
      */
     public void decrypt(){
         try{
-            this.locationDesc = AesUtil.decrypt("wat",this.locationDesc);
+//            this.locationDesc = AesUtil.decrypt("wat",this.locationDesc);
         }catch (Exception e){
             e.printStackTrace();
         }

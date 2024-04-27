@@ -82,8 +82,8 @@ public class MessageIO {
      */
     public void encrypt(){
         try {
-            this.message = AesUtil.encrypt("wat",this.message);
-            this.msgType = AesUtil.encrypt("wat",this.msgType);
+//            this.message = AesUtil.encrypt("wat",this.message);
+//            this.msgType = AesUtil.encrypt("wat",this.msgType);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -94,8 +94,8 @@ public class MessageIO {
      */
     public void decrypt(){
         try {
-            this.message = AesUtil.decrypt("wat",this.message);
-            this.msgType = AesUtil.decrypt("wat",this.msgType);
+//            this.message = AesUtil.decrypt("wat",this.message);
+//            this.msgType = AesUtil.decrypt("wat",this.msgType);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -125,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity
 
     @Override
     public void onGetRTResult(String res) {
-        LogUtil.i(TAG,"[onGetRTResult] res");
+        LogUtil.i(TAG,"[onGetRTResult] res: " + res);
         AlertDialogUtil.show(this,"注册结果：",res);
         btn_registerConfirm.setEnabled(true);
         finish();

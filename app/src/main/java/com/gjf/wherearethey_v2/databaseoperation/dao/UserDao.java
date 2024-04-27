@@ -77,7 +77,8 @@ public class UserDao {
             if(rs.next()){
                 String pwd = "";
                 try {//解密，
-                    pwd = AesUtil.decrypt("wat",rs.getString(1));
+//                    pwd = AesUtil.decrypt("wat",rs.getString(1));
+                    pwd = rs.getString(1);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -90,6 +91,7 @@ public class UserDao {
                 res = 0;
             }
         }catch (SQLException e){
+            LogUtil.e(TAG,"[loginCheck] SQLException ", e);
             e.printStackTrace();
         }finally {
             DBConnection.closeObject(rs);
@@ -117,6 +119,7 @@ public class UserDao {
                 res = 0;  //该账号不存在
             }
         } catch (SQLException e) {
+            LogUtil.e(TAG,"[isUserIDExist] SQLException ", e);
             e.printStackTrace();
         } finally {
             DBConnection.closeObject(rs);
@@ -148,6 +151,7 @@ public class UserDao {
                 user.setUserType("ID不存在");
             }
         } catch (SQLException e) {
+            LogUtil.e(TAG,"[getUserInfoByKey] SQLException ", e);
             e.printStackTrace();
         } finally {
             DBConnection.closeObject(rs);
@@ -169,7 +173,7 @@ public class UserDao {
         try {
             int checkId = userDao.isUserIDExist(newUser.getUserId());
             if(checkId == 1){
-                res = 0;//ID已存在
+                res = 0; //ID已存在
             }else {
                 ps = conn.prepareStatement(sql);
                 ps.setString(1,newUser.getUserId());
@@ -181,6 +185,7 @@ public class UserDao {
                 res = ps.executeUpdate();//成功插入，插入失败
             }
         }catch (SQLException e){
+            LogUtil.e(TAG,"[insertNewUser] SQLException ", e);
             e.printStackTrace();
         }finally {
             DBConnection.closeObject(ps);
@@ -204,6 +209,7 @@ public class UserDao {
             ps.setString(2,id);
             res = ps.executeUpdate();
         }catch (SQLException e){
+            LogUtil.e(TAG,"[updatePassword] SQLException ", e);
             e.printStackTrace();
         }finally {
             DBConnection.closeObject(ps);
@@ -227,6 +233,7 @@ public class UserDao {
             ps.setString(2,id);
             res = ps.executeUpdate();
         }catch (SQLException e){
+            LogUtil.e(TAG,"[updateName] SQLException ", e);
             e.printStackTrace();
         }finally {
             DBConnection.closeObject(ps);
