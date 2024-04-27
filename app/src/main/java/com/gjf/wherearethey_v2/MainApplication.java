@@ -2,6 +2,7 @@ package com.gjf.wherearethey_v2;
 
 import android.app.Application;
 
+import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.gjf.wherearethey_v2.bean.Friends;
 import com.gjf.wherearethey_v2.bean.MessageIO;
@@ -108,7 +109,13 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SDKInitializer.setAgreePrivacy(this, true);
+
+        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
         SDKInitializer.initialize(getApplicationContext());
+        //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
+        //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
+        SDKInitializer.setCoordType(CoordType.BD09LL);
     }
 
     private String getUrl() {
@@ -132,7 +139,7 @@ public class MainApplication extends Application {
     public String getRealPassword() {
         String realPassword = "";
         try {
-            realPassword = AesUtil.decrypt(key,getPassword());
+            realPassword = AesUtil.decrypt(key, getPassword());
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -26,6 +26,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -99,7 +100,11 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
         app = MainApplication.getInstance();
         nowLocation = new NowLocation();
         LocationClientOption option = new LocationClientOption();
-        locationClient = new LocationClient(mContext);
+        try {
+            locationClient = new LocationClient(mContext);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         isFirst = true;
         isFirstSet = true;
         isShowOnline = false;
@@ -518,5 +523,23 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
             mBaiduMap.addOverlay(textOption);
             mBaiduMap.addOverlay(option);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
     }
 }
