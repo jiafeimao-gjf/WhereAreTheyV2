@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import com.gjf.wherearethey_v2.bean.User;
 import com.gjf.wherearethey_v2.task.RegisterTask;
 import com.gjf.wherearethey_v2.util.AlertDialogUtil;
+import com.gjf.wherearethey_v2.util.LogUtil;
 
 /**
  * 注册页面类
@@ -24,6 +25,8 @@ import com.gjf.wherearethey_v2.util.AlertDialogUtil;
  */
 public class RegisterActivity extends AppCompatActivity
         implements RegisterTask.OnRegisterResultListener{
+    private static String TAG = "RegisterActivity";
+
     private EditText et_registerUserId;
     private EditText et_registerPassword;
     private EditText et_registerUserName;
@@ -37,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        LogUtil.i(TAG,"[onCreate]");
         user = new User();
         et_registerUserId = findViewById(R.id.et_registerUserId);
         et_registerPassword = findViewById(R.id.et_registerPassword);
@@ -121,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity
 
     @Override
     public void onGetRTResult(String res) {
+        LogUtil.i(TAG,"[onGetRTResult] res");
         AlertDialogUtil.show(this,"注册结果：",res);
         btn_registerConfirm.setEnabled(true);
         finish();

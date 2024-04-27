@@ -1,6 +1,7 @@
 package com.gjf.wherearethey_v2.databaseoperation.dbconnection;
 
 import com.gjf.wherearethey_v2.MainApplication;
+import com.gjf.wherearethey_v2.util.LogUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
  * @version 1.0
  */
 public class DBConnection {
+    private static String TAG = "DBConnection";
     private static Connection conn = null;//连接的对象
     private static MainApplication app;
     /**
@@ -21,16 +23,19 @@ public class DBConnection {
      * @return  返回一个数据库的链接
      */
     public static Connection getConnection() {
+        LogUtil.i(TAG,"[getConnection]");
         try {
             try {
                 app = MainApplication.getInstance();
                 Class.forName("org.mariadb.jdbc.Driver");  //加载数据库驱动
-                conn = DriverManager.getConnection(app.getRealUrl(), app.getRealUsername(),
-                        app.getRealPassword());   //获得数据库的链接
+                conn = DriverManager.getConnection("jdbc:mysql://192.168.1.7:3306/locationshare", app.getRealUsernameWithoutCrypt(),
+                        app.getRealPasswordWithoutCrypt());   //获得数据库的链接
             } catch (SQLException e) {//处理是否正确连接
+                LogUtil.e(TAG,"[getConnection]", e);
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException e) {//处理是否找到mysql的驱动类
+            LogUtil.e(TAG,"[getConnection]", e);
             e.printStackTrace();
         }
         return conn;

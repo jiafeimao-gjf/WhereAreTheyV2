@@ -9,6 +9,7 @@ import com.gjf.wherearethey_v2.bean.MessageIO;
 import com.gjf.wherearethey_v2.bean.NowLocation;
 import com.gjf.wherearethey_v2.bean.User;
 import com.gjf.wherearethey_v2.encrypt.AesUtil;
+import com.gjf.wherearethey_v2.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -42,9 +43,12 @@ public class MainApplication extends Application {
             messages = new ArrayList<>();
             nowLocations = new ArrayList<>();
             isShare = false;
-            url = "1B85AB74ED02CF8EA2968E79D408E3924789F2CC25F0FB8B7C2EDCD7B025BAE3E1A4CA866FE3C089CBA2075B0798F8E3";
-            username = "146B2196CBF168C17DE310AB0905CF4";
-            password = "914E39B3C560FEE27B49F1C13CF416F7";
+//            url = "1B85AB74ED02CF8EA2968E79D408E3924789F2CC25F0FB8B7C2EDCD7B025BAE3E1A4CA866FE3C089CBA2075B0798F8E3";
+//            username = "146B2196CBF168C17DE310AB0905CF4";
+//            password = "914E39B3C560FEE27B49F1C13CF416F7";
+            url = "jdbc:mysql://192.168.1.7:3306/locationshare";
+            username = "jiafeiuser";
+            password = "locationshare1104/";
             key="wat";
         }
         return mainApplication;
@@ -116,6 +120,8 @@ public class MainApplication extends Application {
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
+
+        LogUtil.setTAG("LocationShare-");
     }
 
     private String getUrl() {
@@ -144,6 +150,18 @@ public class MainApplication extends Application {
             e.printStackTrace();
         }
         return realPassword;
+    }
+
+    public String getRealPasswordWithoutCrypt() {
+        return getPassword();
+    }
+
+    public String getRealUsernameWithoutCrypt() {
+        return getUsername();
+    }
+
+    public String getUrlWithoutCrypt() {
+        return getUrl();
     }
 
     private String getUsername() {

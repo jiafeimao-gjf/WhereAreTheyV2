@@ -4,6 +4,7 @@ package com.gjf.wherearethey_v2.databaseoperation.dao;
 import com.gjf.wherearethey_v2.bean.User;
 import com.gjf.wherearethey_v2.databaseoperation.dbconnection.DBConnection;
 import com.gjf.wherearethey_v2.encrypt.AesUtil;
+import com.gjf.wherearethey_v2.util.LogUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
  * @version 2.0
  */
 public class UserDao {
+    private static String TAG = "UserDao";
     private static UserDao userDao; //唯一实例
     private static Connection conn; //数据库连接对象
     private static PreparedStatement ps; //语句执行器
@@ -33,6 +35,7 @@ public class UserDao {
      * @return 唯一实例
      */
     public static UserDao getInstance(){
+        LogUtil.i(TAG,"[getInstance]");
         if(userDao == null){
             userDao = new UserDao();
         }
@@ -44,6 +47,7 @@ public class UserDao {
      * @return 数据库连接结果，成功为true，失败为false
      */
     public boolean initConnection(){
+        LogUtil.i(TAG,"[initConnection]");
         conn = DBConnection.getConnection();
         return (conn!=null);
     }
@@ -52,6 +56,7 @@ public class UserDao {
      * 关闭数据库连接
      */
     public void closeConnection(){
+        LogUtil.i(TAG,"[closeConnection]");
         if(conn != null) DBConnection.closeObject(conn);
     }
 
@@ -62,6 +67,7 @@ public class UserDao {
      * @return 返回是否成功登陆
      */
     public int loginCheck(String userID,String password){
+        LogUtil.i(TAG,"[loginCheck]");
         int res = -1;
         String sql = "select password from user where userid = ?";
         try {
@@ -98,6 +104,7 @@ public class UserDao {
      * @return 判断结果
      */
     public int isUserIDExist(String userId){
+        LogUtil.i(TAG,"[isUserIDExist]");
         int res = -1;
         String sql = "select userid from user where userid = ?";
         try {
@@ -123,6 +130,7 @@ public class UserDao {
      * 根据用户Id获取全部用户信息
      */
     public User getUserInfoByKey(String userId){
+        LogUtil.i(TAG,"[getUserInfoByKey]");
         User user = new User();
         String sql = "select * from user where userid = ?" ;
         try {
@@ -154,6 +162,7 @@ public class UserDao {
      * @return 结果
      */
     public int insertNewUser(User newUser){
+        LogUtil.i(TAG,"[insertNewUser]");
         int res = -1;
         String sql = "insert into user (userid,password,username," +
                 "pwdprotectid,pwdprotecta,usertype)values(?,?,?,?,?,?)";
@@ -186,6 +195,7 @@ public class UserDao {
      * @return 修改结果
      */
     public int updatePassword(String id,String newPassword){
+        LogUtil.i(TAG,"[updatePassword]");
         int res = -1;
         String sql = "update user set password = ? where userid = ?";
         try{
@@ -208,6 +218,7 @@ public class UserDao {
      * @return 修改结果
      */
     public int updateName(String id,String newName){
+        LogUtil.i(TAG,"[updateName]");
         int res = -1;
         String sql = "update user set username = ? where userId = ?";
         try{
