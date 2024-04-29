@@ -12,10 +12,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file("D:\\Android\\androidsha1\\jiafei-release-key.keystore")
+            storePassword "gjf1104/"
+            keyAlias "gujiafei"
+            keyPassword "gjf1104/"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     buildToolsVersion '27.0.3'
