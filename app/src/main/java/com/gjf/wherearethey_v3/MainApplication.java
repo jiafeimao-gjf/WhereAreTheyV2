@@ -123,7 +123,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LogUtil.i(TAG, "[onCreate] this =" + this.hashCode());
+        LogUtil.i(TAG, "[onCreate] this = " + this.hashCode());
         SharedUtil.initSP(this);
         mBase = this;// 这里保证传入百度地图sdk的context的是onCreate作用域的context
         intBaiduMap();
