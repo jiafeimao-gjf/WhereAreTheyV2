@@ -111,7 +111,7 @@ public class SettingActivity extends AppCompatActivity
                 break;
             case R.id.btn_about:
                 AlertDialogUtil.show(this,"关于",
-                        "描述：专为朋友的位置共享\n"+"开发者：加菲猫"+"\n"+"版本：2.1.2");
+                        "描述：专为朋友的位置共享\n"+"开发者：加菲猫"+"\n"+"版本：3.0.0");
                 break;
         }
     }

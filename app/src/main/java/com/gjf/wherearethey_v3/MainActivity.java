@@ -51,9 +51,13 @@ public class MainActivity extends AppCompatActivity {
         AlertDialogUtil.show(this, "隐私协议", "我们收集存储的信息：\n1、您的账号和密码 \n2、您的位置信息 \n3、您与好友的聊天信息 \n\n 以上信息都会加密存储。", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SharedUtil.getInstance(STATIC_PRIVACY_SP).writeBooleanShared(STATIC_PRIVACY_SP_KEY, true);
-                MainApplication.getInstance().intBaiduMap();
-                mHandler.postDelayed(jumpTask, 1000);
+                SharedUtil.getInstance(STATIC_PRIVACY_SP).writeBooleanShared(STATIC_PRIVACY_SP_KEY, true, new SharedUtil.FinishCallback() {
+                    @Override
+                    public void finishSpWrite() {
+                        MainApplication.getInstance().intBaiduMap();
+                        mHandler.postDelayed(jumpTask, 1000);
+                    }
+                });
             }
         }, new DialogInterface.OnClickListener() {
             @Override

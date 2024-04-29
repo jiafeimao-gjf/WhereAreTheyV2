@@ -11,8 +11,8 @@ import android.content.SharedPreferences;
 public class SharedUtil {
 
 
-	public static String STATIC_PRIVACY_SP = "share_privacy";
-	public static String STATIC_PRIVACY_SP_KEY = "is_allow";
+	public static String STATIC_PRIVACY_SP = "Map_Privacy";
+	public static String STATIC_PRIVACY_SP_KEY = "privacyMode";
 
 	private static SharedUtil mUtil;
 	private static SharedPreferences mShared;
@@ -51,6 +51,17 @@ public class SharedUtil {
 		editor.apply();
 	}
 
+	public void writeBooleanShared(String key, boolean value, FinishCallback finishCallback) {
+		SharedPreferences.Editor editor = mShared.edit();
+		editor.putBoolean(key, value);
+		editor.apply();
+		finishCallback.finishSpWrite();
+	}
+
+
+	public interface FinishCallback {
+		void finishSpWrite();
+	}
 	public String readStringShared(String key, String defaultValue) {
 		return mShared.getString(key, defaultValue);
 	}

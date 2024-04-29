@@ -29,6 +29,7 @@ public class MainApplication extends Application {
     private static String TAG = "MainApplication";
 
     public static MainApplication mainApplication;
+    public static Context mBase;
     public static User user;
     private static TabGroupActivity tga;
     private int locationFrequency;
@@ -122,8 +123,9 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LogUtil.i(TAG, "[onCreate]");
+        LogUtil.i(TAG, "[onCreate] this =" + this.hashCode());
         SharedUtil.initSP(this);
+        mBase = this;// 这里保证传入百度地图sdk的context的是onCreate作用域的context
         intBaiduMap();
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
@@ -135,17 +137,17 @@ public class MainApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        LogUtil.i(TAG, "[attachBaseContext]");
+        LogUtil.i(TAG, "[attachBaseContext]  this = " + this.hashCode());
+        LogUtil.i(TAG, "[attachBaseContext]  base = " + base.hashCode());
     }
 
     public void intBaiduMap() {
-        LogUtil.i(TAG, "[intBaiduMap]");
+        LogUtil.i(TAG, "[intBaiduMap] this = " + this.hashCode());
         if (SharedUtil.getInstance(STATIC_PRIVACY_SP).readBooleanShared(STATIC_PRIVACY_SP_KEY, false)) {
-            SDKInitializer.setAgreePrivacy(this, true);
+            SDKInitializer.setAgreePrivacy(mBase, true);
             //在使用SDK各组件之前初始化context信息，传入ApplicationContext
-            SDKInitializer.initialize(this);
+            SDKInitializer.initialize(mBase);
             LocationClient.setAgreePrivacy(true);
-
         }
     }
 
@@ -202,7 +204,6 @@ public class MainApplication extends Application {
         }
         return realUsername;
     }
-
 
 
 }
