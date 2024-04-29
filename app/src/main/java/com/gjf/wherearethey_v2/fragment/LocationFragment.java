@@ -48,8 +48,8 @@ import com.gjf.wherearethey_v2.task.GetFriendsLocationsTask;
 import com.gjf.wherearethey_v2.task.SendLocationTask;
 import com.gjf.wherearethey_v2.task.SendMsgTask;
 import com.gjf.wherearethey_v2.task.ShowFriendsTask;
-import com.gjf.wherearethey_v2.util.AlertDialogUtil;
 import com.gjf.wherearethey_v2.util.DateUtil;
+import com.gjf.wherearethey_v2.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +62,7 @@ import java.util.Date;
  */
 public class LocationFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         CompoundButton.OnCheckedChangeListener {
+    private static String TAG = "LocationFragment";
     public LocationClient locationClient;//定位客户端
     private MainApplication app;//app的引用
     private NowLocation nowLocation;//实时位置
@@ -98,6 +99,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        LogUtil.i(TAG, "[onCreateView]");
         mContext = getActivity();
         app = MainApplication.getInstance();
         nowLocation = new NowLocation();
@@ -152,6 +154,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
      * 中线点列表初始化
      */
     private void initCenterSelector() {
+        LogUtil.i(TAG, "[initCenterSelector]");
         ArrayAdapter centerAdapter = new ArrayAdapter(mContext, R.layout.item_select, getFriendsIdList());
         sp_center.setPrompt("切换好友");
         sp_center.setAdapter(centerAdapter);
@@ -165,6 +168,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
      * @return 好友ID数组
      */
     private String[] getFriendsIdList() {
+        LogUtil.i(TAG, "[getFriendsIdList]");
         int size = app.getNowLocations().size();
         String[] Ids = new String[size];
         if (size > 0) {
@@ -181,6 +185,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onStart() {
         super.onStart();
+        LogUtil.i(TAG, "[onStart]");
         if (app.isIsShare()) {
             cb_shareSwitch.setChecked(true);
             mHander.postDelayed(shareTask, 2000);
@@ -193,6 +198,8 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onStop() {
         super.onStop();
+        LogUtil.i(TAG, "[onStart]");
+
         mHander.removeCallbacks(shareTask);
         if (sendLocationTask != null) sendLocationTask.cancel(true);
         if (showFriendsTask != null) showFriendsTask.cancel(true);
@@ -207,13 +214,6 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     public void onDestroy() {
         super.onDestroy();
         mHander.removeCallbacks(shareTask);
-        if (mMapView != null) {
-            mMapView.onDestroy();
-            mMapView = null;
-        }
-        locationClient.disableLocInForeground(true);
-        locationClient.unRegisterLocationListener(locationListener);
-        locationClient.stop();
     }
 
     /**
@@ -542,7 +542,13 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mMapView.onDestroy();
+        if (mMapView != null) {
+            mMapView.onDestroy();
+            mMapView = null;
+        }
+        locationClient.disableLocInForeground(true);
+        locationClient.unRegisterLocationListener(locationListener);
+        locationClient.stop();
     }
 
     @Override
