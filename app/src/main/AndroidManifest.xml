@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gjf.wherearethey_v2">
+    package="com.gjf.wherearethey_v3">
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -23,29 +23,29 @@
 
     <!-- Application 节点-->
     <application
-        android:name=".MainApplication"
+        android:name="com.gjf.wherearethey_v3.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.gjf.wherearethey_v3.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgetPwdActivity" />
-        <activity android:name=".TabGroupActivity" />
-        <activity android:name=".ChangePwdActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".DisplayFriendsActivity" />
-        <activity android:name=".FriendsInfoActivity" />
-        <activity android:name=".TalkingRoomActivity"/>
+        <activity android:name="com.gjf.wherearethey_v3.LoginActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.RegisterActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.ForgetPwdActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.TabGroupActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.ChangePwdActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.SettingActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.DisplayFriendsActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.FriendsInfoActivity" />
+        <activity android:name="com.gjf.wherearethey_v3.TalkingRoomActivity"/>
 
         <!-- baidu Map INFO -->
         <service
