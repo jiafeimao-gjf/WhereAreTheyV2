@@ -56,11 +56,12 @@ import java.util.Date;
 
 /**
  * 定位子页面，地图显示、地图交互
+ *
  * @author gjf
  * @version 2.0
  */
 public class LocationFragment extends Fragment implements AdapterView.OnItemSelectedListener,
-        CompoundButton.OnCheckedChangeListener{
+        CompoundButton.OnCheckedChangeListener {
     public LocationClient locationClient;//定位客户端
     private MainApplication app;//app的引用
     private NowLocation nowLocation;//实时位置
@@ -75,21 +76,22 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     private Context mContext;//获取当前的类对象
     private boolean isShowOnline;
     private NowLocation listenerLocation;
-    private String[] showMode = {"全部","仅在线","仅自己"};
+    private String[] showMode = {"全部", "仅在线", "仅自己"};
     SendLocationTask sendLocationTask;
     ShowFriendsTask showFriendsTask;
     GetFriendsLocationsTask getFriendsLocationsTask;
     /**
      * 红色表示自己，蓝色表示在线朋友、灰色表示离线的朋友
      */
-    private int[] ic_location = {R.drawable.ic_location_mine,R.drawable.ic_location_friends_online,
+    private int[] ic_location = {R.drawable.ic_location_mine, R.drawable.ic_location_friends_online,
             R.drawable.ic_location_friends_offline};
     private boolean isFirst;//判断是否是初始状态
 
     /**
      * 创建页面对象
-     * @param inflater 布局实例化
-     * @param container 容器
+     *
+     * @param inflater           布局实例化
+     * @param container          容器
      * @param savedInstanceState 保存的参数
      * @return
      */
@@ -114,7 +116,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
         cb_shareSwitch = mView.findViewById(R.id.cb_shareSwitch);
         cb_shareSwitch.setOnCheckedChangeListener(this);
         cb_shareSwitch.setChecked(false);
-        ArrayAdapter adapter = new ArrayAdapter(mContext,R.layout.item_select,showMode);
+        ArrayAdapter adapter = new ArrayAdapter(mContext, R.layout.item_select, showMode);
         sp_showMode = mView.findViewById(R.id.sp_showMode);
         sp_showMode.setPrompt("显示模式");
         sp_showMode.setAdapter(adapter);
@@ -129,15 +131,15 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
         locationClient.registerLocationListener(locationListener);
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setCoorType("bd09ll");//坐标
-        option.setScanSpan(app.getLocationFrequency()*1010);//ms
+        option.setScanSpan(app.getLocationFrequency() * 1010);//ms
         option.setOpenGps(true);
         option.setIgnoreKillProcess(true);
-        option.setWifiCacheTimeOut(5*60*1000);
+        option.setWifiCacheTimeOut(5 * 60 * 1000);
         option.setIsNeedAddress(true);
         option.setIsNeedLocationDescribe(true);
         locationClient.setLocOption(option);
         locationClient.start();
-        if(!app.getNowLocations().isEmpty()){
+        if (!app.getNowLocations().isEmpty()) {
             mBaiduMap.clear();
             drawFriendsLocations(app.getNowLocations());
             initCenterSelector();
@@ -149,8 +151,8 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     /**
      * 中线点列表初始化
      */
-    private void initCenterSelector(){
-        ArrayAdapter centerAdapter = new ArrayAdapter(mContext,R.layout.item_select, getFriendsIdList());
+    private void initCenterSelector() {
+        ArrayAdapter centerAdapter = new ArrayAdapter(mContext, R.layout.item_select, getFriendsIdList());
         sp_center.setPrompt("切换好友");
         sp_center.setAdapter(centerAdapter);
         sp_center.setOnItemSelectedListener(LocationFragment.this);
@@ -159,13 +161,14 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
 
     /**
      * 获取好友ID列表
+     *
      * @return 好友ID数组
      */
-    private String[] getFriendsIdList(){
+    private String[] getFriendsIdList() {
         int size = app.getNowLocations().size();
         String[] Ids = new String[size];
-        if(size > 0){
-            for(int i = 0;i < size;i++){
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
                 Ids[i] = app.getNowLocations().get(i).getUserId();
             }
         }
@@ -178,9 +181,9 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onStart() {
         super.onStart();
-        if(app.isIsShare()){
+        if (app.isIsShare()) {
             cb_shareSwitch.setChecked(true);
-            mHander.postDelayed(shareTask,2000);
+            mHander.postDelayed(shareTask, 2000);
         }
     }
 
@@ -191,9 +194,9 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     public void onStop() {
         super.onStop();
         mHander.removeCallbacks(shareTask);
-        if(sendLocationTask!=null) sendLocationTask.cancel(true);
-        if(showFriendsTask!=null) showFriendsTask.cancel(true);
-        if(getFriendsLocationsTask!=null) getFriendsLocationsTask.cancel(true);
+        if (sendLocationTask != null) sendLocationTask.cancel(true);
+        if (showFriendsTask != null) showFriendsTask.cancel(true);
+        if (getFriendsLocationsTask != null) getFriendsLocationsTask.cancel(true);
     }
 
 
@@ -204,7 +207,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     public void onDestroy() {
         super.onDestroy();
         mHander.removeCallbacks(shareTask);
-        if(mMapView!=null){
+        if (mMapView != null) {
             mMapView.onDestroy();
             mMapView = null;
         }
@@ -219,7 +222,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            if(bdLocation != null && mMapView != null){
+            if (bdLocation != null && mMapView != null) {
                 final double latitude = bdLocation.getLatitude();    //获取纬度信息
                 double longitude = bdLocation.getLongitude();    //获取经度信息
                 //地址显示
@@ -231,13 +234,13 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                 nowLocation.setTime(new Date());
                 nowLocation.setUserId(app.getUser().getUserId());
                 //第一次进入定位页面需要的操作
-                if(isFirst){//是第一次
+                if (isFirst) {//是第一次
                     isFirst = false;//设置为不是第一次
                     mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
                     //跟新中心点
-                    LatLng nextLatLng = new LatLng(nowLocation.getLatitude(),nowLocation.getLongitude());
+                    LatLng nextLatLng = new LatLng(nowLocation.getLatitude(), nowLocation.getLongitude());
                     MapStatus.Builder builder = new MapStatus.Builder();
-                    builder.target(nextLatLng )//缩放中心点
+                    builder.target(nextLatLng)//缩放中心点
                             .zoom(18);//缩放级别
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory
                             .newMapStatus(builder.build()));
@@ -246,21 +249,21 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                         public boolean onMarkerClick(Marker marker) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                             builder.setTitle("位置信息详情");
-                            for(int i = 0;i < app.getNowLocations().size();i++){
+                            for (int i = 0; i < app.getNowLocations().size(); i++) {
                                 listenerLocation = app.getNowLocations().get(i);
-                                if(listenerLocation.getUserId().equals(marker.getTitle())){
-                                    builder.setMessage(DateUtil.getNowDateTime(listenerLocation.getTime())+"\n"
-                                            +listenerLocation.getUserId()+"："+listenerLocation.getLocationDesc());
+                                if (listenerLocation.getUserId().equals(marker.getTitle())) {
+                                    builder.setMessage(DateUtil.getNowDateTime(listenerLocation.getTime()) + "\n"
+                                            + listenerLocation.getUserId() + "：" + listenerLocation.getLocationDesc());
                                     break;
                                 }
                             }
                             builder.setNegativeButton("向好友发消息", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(!listenerLocation.getUserId().equals(app.getUser().getUserId())) {
+                                    if (!listenerLocation.getUserId().equals(app.getUser().getUserId())) {
                                         //调用发消息对话框
                                         sendMsgDialog(listenerLocation.getUserId());
-                                    }else {
+                                    } else {
                                         Toast.makeText(mContext, "不能给自己发消息", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -275,12 +278,12 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                             return true;
                         }
                     });
-                    if(app.getNowLocations().isEmpty()) {
+                    if (app.getNowLocations().isEmpty()) {
                         app.getNowLocations().add(nowLocation);
                         drawFriendsLocation(nowLocation);
                     }
                 }
-            }else{
+            } else {
                 nowLocation.setLocationDesc("没有定位信息！");
             }
         }
@@ -288,9 +291,10 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
 
     /**
      * 向好友发送消息方法
+     *
      * @param friendid 朋友id
      */
-    private void sendMsgDialog(final String friendid){
+    private void sendMsgDialog(final String friendid) {
         //进入发送聊天室活动页
         AlertDialog.Builder msgDialog = new AlertDialog.Builder(mContext);
         msgDialog.setMessage("填写发送消息：");
@@ -299,7 +303,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
         msgDialog.setPositiveButton("发送", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(!et_message.getText().toString().equals("")) {
+                if (!et_message.getText().toString().equals("")) {
                     SendMsgTask sendMsgTask = new SendMsgTask();
                     sendMsgTask.setOnInsertMsgResultListener(new SendMsgTask.OnInsertMsgResultListener() {
                         @Override
@@ -314,20 +318,22 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                     sendMsgTask.execute(new MessageIO(
                             app.getUser().getUserId(), friendid,
                             et_message.getText().toString(), "normal"));
-                }else{
+                } else {
                     Toast.makeText(mContext, "不能发送空消息", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         msgDialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) { }
+            public void onClick(DialogInterface dialog, int which) {
+            }
         });
         msgDialog.show();
     }
 
     /**
      * 下拉框监听响应方法
+     *
      * @param parent
      * @param view
      * @param position 选择的序号
@@ -335,33 +341,33 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(parent.getId() == R.id.sp_showMode){
-            if(position == 0){
+        if (parent.getId() == R.id.sp_showMode) {
+            if (position == 0) {
                 isShowOnline = false;
                 mBaiduMap.clear();
                 drawFriendsLocations(app.getNowLocations());
-            }else if(position == 1){
+            } else if (position == 1) {
                 isShowOnline = true;
                 mBaiduMap.clear();
                 drawFriendsLocations(app.getNowLocations());
-            }else if(position == 2){
+            } else if (position == 2) {
                 //仅显示自己
                 mBaiduMap.clear();
-                LatLng nextLatLng = new LatLng(nowLocation.getLatitude(),nowLocation.getLongitude());
+                LatLng nextLatLng = new LatLng(nowLocation.getLatitude(), nowLocation.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(nextLatLng )//缩放中心点
+                builder.target(nextLatLng)//缩放中心点
                         .zoom(19);//缩放级别
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory
                         .newMapStatus(builder.build()));
                 cb_shareSwitch.setChecked(false);
                 drawFriendsLocation(nowLocation);
             }
-        }else if(parent.getId() == R.id.sp_center){
+        } else if (parent.getId() == R.id.sp_center) {
             //更新新地图中心，循环切换地图中心
             NowLocation next = app.getNowLocations().get(position);
-            LatLng nextLatLng = new LatLng(next.getLatitude(),next.getLongitude());
+            LatLng nextLatLng = new LatLng(next.getLatitude(), next.getLongitude());
             MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(nextLatLng )//缩放中心点
+            builder.target(nextLatLng)//缩放中心点
                     .zoom(19);//缩放级别
             mBaiduMap.animateMapStatus(MapStatusUpdateFactory
                     .newMapStatus(builder.build()));
@@ -375,16 +381,17 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
 
     /**
      * 位置共享选择框监听方法
+     *
      * @param buttonView
-     * @param isChecked 选中状态
+     * @param isChecked  选中状态
      */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked){//启动位置共享
+        if (isChecked) {//启动位置共享
             app.setIsShare(true);
-            mHander.postDelayed(shareTask,2000);
+            mHander.postDelayed(shareTask, 2000);
             sp_showMode.setSelection(0);
-        }else{//关闭位置共享
+        } else {//关闭位置共享
             app.setIsShare(false);
             mHander.removeCallbacks(shareTask);
         }
@@ -405,7 +412,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                     new SendLocationTask.OnSendLocationResultListener() {
                         @Override
                         public void onGetSLTResult(String res) {
-                            if(!res.equals("success")){
+                            if (!res.equals("success")) {
                                 Toast.makeText(mContext, res, Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -413,15 +420,15 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
             NowLocation location = new NowLocation(nowLocation);
             location.encrypt();//加密
             sendLocationTask.execute(location);
-            mHander.postDelayed(shareTask,app.getLocationFrequency()*1000);
+            mHander.postDelayed(shareTask, app.getLocationFrequency() * 1000);
         }
     };
 
     /**
      * 启动异步任务，获取朋友列表
      */
-    private void getFriendsList(){
-        if(app.getFriends().isEmpty()) {//
+    private void getFriendsList() {
+        if (app.getFriends().isEmpty()) {//
             //获取好友列表
             showFriendsTask = new ShowFriendsTask();
             showFriendsTask.setOnShowFriendsResultListener(
@@ -438,7 +445,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                         }
                     });
             showFriendsTask.execute(app.getUser().getUserId());
-        }else{
+        } else {
             getFriendsLocations();
         }
     }
@@ -446,7 +453,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     /**
      * 启动异步任务，获取朋友位置信息
      */
-    private void getFriendsLocations(){
+    private void getFriendsLocations() {
         //获取好友位置
         getFriendsLocationsTask = new GetFriendsLocationsTask();
         getFriendsLocationsTask.setOnGetMyMsgListener(
@@ -456,7 +463,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                         if (!nowLocations.get(0).getUserId().equals("")) {
                             app.getNowLocations().clear();
                             app.getNowLocations().add(nowLocation);
-                            for(int i = 0;i < nowLocations.size();i++){
+                            for (int i = 0; i < nowLocations.size(); i++) {
                                 nowLocations.get(i).decrypt();//解密
                             }
                             app.getNowLocations().addAll(nowLocations);
@@ -467,7 +474,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                                     nowLocations.get(0).getLocationDesc(),
                                     Toast.LENGTH_SHORT).show();
                         }
-                        if(isFirstSet){
+                        if (isFirstSet) {
                             initCenterSelector();//初始化Center Spinner
                             isFirstSet = false;
                         }
@@ -479,7 +486,7 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     /**
      * 绘制一组位置标注
      */
-    private void drawFriendsLocations(ArrayList<NowLocation> _locations){
+    private void drawFriendsLocations(ArrayList<NowLocation> _locations) {
         for (int i = 0; i < _locations.size(); i++) {
             drawFriendsLocation(_locations.get(i));
         }
@@ -487,9 +494,10 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
 
     /**
      * 绘制单个位置标注
+     *
      * @param _nowLocation 位置信息
      */
-    private void drawFriendsLocation(NowLocation _nowLocation){
+    private void drawFriendsLocation(NowLocation _nowLocation) {
         boolean isOnline = true;
         LatLng latLng = new LatLng(_nowLocation.getLatitude(), _nowLocation.getLongitude());
         OverlayOptions textOption = new TextOptions()
@@ -514,12 +522,12 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
                 isOnline = false;
             }
         }
-        if(isShowOnline){//仅显示在线
-            if(isOnline) {//在线
+        if (isShowOnline) {//仅显示在线
+            if (isOnline) {//在线
                 mBaiduMap.addOverlay(textOption);
                 mBaiduMap.addOverlay(option);
             }
-        }else{
+        } else {
             mBaiduMap.addOverlay(textOption);
             mBaiduMap.addOverlay(option);
         }

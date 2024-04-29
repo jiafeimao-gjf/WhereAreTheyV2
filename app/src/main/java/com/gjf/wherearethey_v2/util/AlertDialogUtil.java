@@ -6,12 +6,13 @@ import android.support.v7.app.AlertDialog;
 
 /**
  * 提示框类
+ *
  * @author gjf
  * @version 1.0
  */
 public class AlertDialogUtil {
 
-    public static void show(Activity activity, String msg){
+    public static void show(Activity activity, String msg) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(activity);
         builder.setTitle("提示：");
@@ -24,7 +25,8 @@ public class AlertDialogUtil {
                 });
         builder.show();
     }
-    public static void show(Activity activity,String title, String msg){
+
+    public static void show(Activity activity, String title, String msg) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(activity);
         builder.setTitle(title);
@@ -33,8 +35,21 @@ public class AlertDialogUtil {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                     }
                 });
+        builder.show();
+    }
+
+    public static void show(Activity activity, String title, String msg,
+                            DialogInterface.OnClickListener pListener,DialogInterface.OnClickListener NListener) {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(msg);
+        builder.setPositiveButton("好的", pListener);
+        builder.setNegativeButton("拒绝",NListener);
+
         builder.show();
     }
 

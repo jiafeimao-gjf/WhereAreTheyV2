@@ -10,25 +10,53 @@ import android.content.SharedPreferences;
  */
 public class SharedUtil {
 
+
+	public static String STATIC_PRIVACY_SP = "share_privacy";
+	public static String STATIC_PRIVACY_SP_KEY = "is_allow";
+
 	private static SharedUtil mUtil;
 	private static SharedPreferences mShared;
-	
-	public static SharedUtil getInstance(Context ctx,String filename) {
+
+	private Context context = null;
+
+	private SharedUtil(Context context) {
+		this.context = context;
+
+	}
+
+	public static void initSP(Context ctx) {
 		if (mUtil == null) {
-			mUtil = new SharedUtil();
+			mUtil = new SharedUtil(ctx);
 		}
-		mShared = ctx.getSharedPreferences(filename, Context.MODE_PRIVATE);
+	}
+
+	public static SharedUtil getInstance(String filename) {
+		mShared = mUtil.getSharedPreferences(filename);
 		return mUtil;
 	}
 
-	public void writeShared(String key, String value) {
+	private SharedPreferences getSharedPreferences(String filename) {
+		return context.getSharedPreferences(filename, Context.MODE_PRIVATE);
+	}
+
+	public void writeStringShared(String key, String value) {
 		SharedPreferences.Editor editor = mShared.edit();
 		editor.putString(key, value);
 		editor.apply();
 	}
 
-	public String readShared(String key, String defaultValue) {
+	public void writeBooleanShared(String key, boolean value) {
+		SharedPreferences.Editor editor = mShared.edit();
+		editor.putBoolean(key, value);
+		editor.apply();
+	}
+
+	public String readStringShared(String key, String defaultValue) {
 		return mShared.getString(key, defaultValue);
+	}
+
+	public boolean readBooleanShared(String key, boolean defaultValue) {
+		return mShared.getBoolean(key, defaultValue);
 	}
 	
 }

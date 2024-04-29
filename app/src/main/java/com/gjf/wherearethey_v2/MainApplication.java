@@ -1,7 +1,12 @@
 package com.gjf.wherearethey_v2;
 
-import android.app.Application;
+import static com.gjf.wherearethey_v2.util.SharedUtil.STATIC_PRIVACY_SP;
+import static com.gjf.wherearethey_v2.util.SharedUtil.STATIC_PRIVACY_SP_KEY;
 
+import android.app.Application;
+import android.content.Context;
+
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.gjf.wherearethey_v2.bean.Friends;
@@ -10,15 +15,19 @@ import com.gjf.wherearethey_v2.bean.NowLocation;
 import com.gjf.wherearethey_v2.bean.User;
 import com.gjf.wherearethey_v2.encrypt.AesUtil;
 import com.gjf.wherearethey_v2.util.LogUtil;
+import com.gjf.wherearethey_v2.util.SharedUtil;
 
 import java.util.ArrayList;
 
 /**
  * 应用类，存放全局数据，采用单利模式
+ *
  * @author gjf
  * @version 1.0
  */
 public class MainApplication extends Application {
+    private static String TAG = "MainApplication";
+
     public static MainApplication mainApplication;
     public static User user;
     private static TabGroupActivity tga;
@@ -32,8 +41,8 @@ public class MainApplication extends Application {
     private static String username;
     private static String password;
 
-    public static MainApplication getInstance(){
-        if(mainApplication == null){
+    public static MainApplication getInstance() {
+        if (mainApplication == null) {
             mainApplication = new MainApplication();
             mainApplication.setLocationFrequency(5);
             user = new User();
@@ -49,7 +58,7 @@ public class MainApplication extends Application {
             url = "jdbc:mysql://192.168.1.7:3306/locationshare";
             username = "jiafeiuser";
             password = "locationshare1104/";
-            key="wat";
+            key = "wat";
         }
         return mainApplication;
     }
@@ -113,15 +122,31 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SDKInitializer.setAgreePrivacy(this, true);
-
-        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
-        SDKInitializer.initialize(getApplicationContext());
+        LogUtil.i(TAG, "[onCreate]");
+        SharedUtil.initSP(this);
+        intBaiduMap();
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
-
+        MainApplication.getInstance();
         LogUtil.setTAG("LocationShare-");
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        LogUtil.i(TAG, "[attachBaseContext]");
+    }
+
+    public void intBaiduMap() {
+        LogUtil.i(TAG, "[intBaiduMap]");
+        if (SharedUtil.getInstance(STATIC_PRIVACY_SP).readBooleanShared(STATIC_PRIVACY_SP_KEY, false)) {
+            SDKInitializer.setAgreePrivacy(this.getApplicationContext(), true);
+            //在使用SDK各组件之前初始化context信息，传入ApplicationContext
+            SDKInitializer.initialize(this.getApplicationContext());
+            LocationClient.setAgreePrivacy(true);
+
+        }
     }
 
     private String getUrl() {
@@ -131,8 +156,8 @@ public class MainApplication extends Application {
     public String getRealUrl() {
         String realUrl = "";
         try {
-            realUrl = AesUtil.decrypt(key,getUrl());
-        }catch (Exception e){
+            realUrl = AesUtil.decrypt(key, getUrl());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return realUrl;
@@ -146,7 +171,7 @@ public class MainApplication extends Application {
         String realPassword = "";
         try {
             realPassword = AesUtil.decrypt(key, getPassword());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return realPassword;
@@ -168,14 +193,16 @@ public class MainApplication extends Application {
         return username;
     }
 
-    public String getRealUsername(){
+    public String getRealUsername() {
         String realUsername = "";
         try {
-            realUsername = AesUtil.decrypt(key,getUsername());
-        }catch (Exception e){
+            realUsername = AesUtil.decrypt(key, getUsername());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return realUsername;
     }
+
+
 
 }
