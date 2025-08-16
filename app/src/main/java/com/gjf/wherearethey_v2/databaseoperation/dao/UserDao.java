@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author gjf
  * @version 2.0
  */
-public class UserDao {
+public class UserDao implements IUserDao {
     private static UserDao userDao; //唯一实例
     private static Connection conn; //数据库连接对象
     private static PreparedStatement ps; //语句执行器

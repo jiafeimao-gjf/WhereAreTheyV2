@@ -17,7 +17,7 @@ import java.util.Date;
  * @author gjf
  * @version 1.0
  */
-public class MessageIODao {
+public class MessageIODao implements IMessageIODao {
     private static MessageIODao messageIODao;   //唯一实例
     private static Connection conn;
     private static PreparedStatement ps;

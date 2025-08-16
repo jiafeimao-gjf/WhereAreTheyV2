@@ -7,6 +7,7 @@ import com.gjf.wherearethey_v2.bean.Friends;
 import com.gjf.wherearethey_v2.bean.MessageIO;
 import com.gjf.wherearethey_v2.bean.NowLocation;
 import com.gjf.wherearethey_v2.bean.User;
+import com.gjf.wherearethey_v2.databaseoperation.factory.DaoFactory;
 import com.gjf.wherearethey_v2.encrypt.AesUtil;
 
 import java.util.ArrayList;
@@ -109,6 +110,8 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SDKInitializer.initialize(getApplicationContext());
+        // Initialize the DAO factory
+        DaoFactory.initialize(this);
     }
 
     private String getUrl() {

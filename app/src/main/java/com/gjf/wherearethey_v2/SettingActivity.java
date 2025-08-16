@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gjf.wherearethey_v2.bean.MessageIO;
+import com.gjf.wherearethey_v2.databaseoperation.factory.DaoFactory;
 import com.gjf.wherearethey_v2.task.SendMsgTask;
 import com.gjf.wherearethey_v2.util.AlertDialogUtil;
 
@@ -31,6 +32,7 @@ public class SettingActivity extends AppCompatActivity
         findViewById(R.id.btn_locationFre).setOnClickListener(this);
         findViewById(R.id.btn_report).setOnClickListener(this);
         findViewById(R.id.btn_about).setOnClickListener(this);
+        findViewById(R.id.btn_db_settings).setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.tb_setting);
         setSupportActionBar(toolbar);
@@ -113,7 +115,45 @@ public class SettingActivity extends AppCompatActivity
                 AlertDialogUtil.show(this,"关于",
                         "描述：专为朋友的位置共享\n"+"开发者：加菲猫"+"\n"+"版本：2.1.2");
                 break;
+            case R.id.btn_db_settings:
+                showDatabaseSettingsDialog();
+                break;
         }
+    }
+
+    private void showDatabaseSettingsDialog() {
+        AlertDialog.Builder dbBuilder = new AlertDialog.Builder(this);
+        dbBuilder.setTitle("数据库设置");
+        dbBuilder.setMessage("选择数据访问实现方式：");
+
+        // Get current implementation type
+        String[] options = {"JDBC (默认)", "REST API (未来支持)"};
+        int currentSelection = DaoFactory.IMPL_TYPE_JDBC.equals(DaoFactory.getDefaultImplType()) ? 0 : 1;
+
+        dbBuilder.setSingleChoiceItems(options, currentSelection, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // JDBC
+                        DaoFactory.setDefaultImplType(DaoFactory.IMPL_TYPE_JDBC);
+                        Toast.makeText(SettingActivity.this, "已切换到JDBC实现", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1: // REST API
+                        Toast.makeText(SettingActivity.this, "REST API实现将在未来版本中支持", Toast.LENGTH_LONG).show();
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dbBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dbBuilder.show();
     }
 
     @Override
