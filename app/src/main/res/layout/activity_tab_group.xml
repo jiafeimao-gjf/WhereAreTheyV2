@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/warm_background"
     tools:context=".TabGroupActivity">
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <!-- 这是实际的内容框架，内容页面都挂在这个框架布局下面。
             把FragmentLayout放在FragmentTabHost上面，标签栏就在页面底部；
             反之FragmentLayout在FragmentTabHost下面，标签栏就在页面顶部。 -->
@@ -16,16 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/black"/>
+            android:layout_height="1dp"
+            android:background="@color/warm_text"
+            android:alpha="0.2"/>
 
         <!-- 碎片标签栏的id必须是@android:id/tabhost -->
         <android.support.v4.app.FragmentTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="8dp">
 
             <!-- 这是例行公事的选项内容，实际看不到 -->
             <FrameLayout
