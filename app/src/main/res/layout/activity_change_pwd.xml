@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChangePwdActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/tb_changePwd"
             android:layout_width="match_parent"
@@ -17,32 +19,38 @@
             app:navigationIcon="@drawable/ic_action_back"
             app:title="@string/changePwd"
             app:titleTextColor="@color/half_blue" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/black"
-            android:layout_margin="1dp"/>
+            android:layout_margin="1dp"
+            android:background="@color/black" />
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_head_image"
+            android:layout_gravity="center"
             android:contentDescription="@string/icon"
-            android:layout_gravity="center"/>
+            android:src="@drawable/ic_head_image" />
+
         <TextView
             android:id="@+id/tv_cPwdUserId"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:textSize="25sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/black"
-            android:layout_margin="3dp"/>
+            android:layout_margin="3dp"
+            android:background="@color/black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
+
             <TextView
                 android:id="@+id/tv_oldPwdHint"
                 android:layout_width="wrap_content"
@@ -50,23 +58,26 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
                 android:text="旧密码："
-                android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
             <EditText
                 android:id="@+id/et_oldPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/tv_oldPwdHint"
-                android:inputType="textPassword"
-                android:textSize="22sp"
-                android:gravity="start|center"
-                android:textColor="@color/black"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"/>
+                android:layout_marginBottom="3dp"
+                android:layout_toRightOf="@+id/tv_oldPwdHint"
+                android:gravity="start|center"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
+
             <TextView
                 android:id="@+id/tv_newPwdHint"
                 android:layout_width="wrap_content"
@@ -74,23 +85,26 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
                 android:text="新密码："
-                android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
             <EditText
                 android:id="@+id/et_newPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/tv_newPwdHint"
-                android:inputType="textPassword"
-                android:textSize="22sp"
-                android:gravity="start|center"
-                android:textColor="@color/black"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"/>
+                android:layout_marginBottom="3dp"
+                android:layout_toRightOf="@+id/tv_newPwdHint"
+                android:gravity="start|center"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
+
             <TextView
                 android:id="@+id/tv_cfNewPwdHint"
                 android:layout_width="wrap_content"
@@ -98,30 +112,32 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
                 android:text="确认新密码："
-                android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
             <EditText
                 android:id="@+id/et_cfNewPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/tv_cfNewPwdHint"
-                android:inputType="textPassword"
-                android:textSize="22sp"
-                android:gravity="start|center"
-                android:textColor="@color/black"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"/>
+                android:layout_marginBottom="3dp"
+                android:layout_toRightOf="@+id/tv_cfNewPwdHint"
+                android:gravity="start|center"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
         </RelativeLayout>
+
         <Button
             android:id="@+id/btn_pwdChangeConfirm"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="3dp"
             android:background="@color/half_yellow"
             android:text="修改"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_margin="3dp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
