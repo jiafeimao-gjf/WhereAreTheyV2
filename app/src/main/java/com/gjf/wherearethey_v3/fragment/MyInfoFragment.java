@@ -88,106 +88,96 @@ public class MyInfoFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    /**
-     * 点击事件响应
-     * @param v 被点击的视图对象
-     */
+    /**\n     * 点击事件响应\n     * @param v 被点击的视图对象\n     */
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_login://登陆事件或者注销事件
-                Intent LoginIntent = new Intent(mContext, LoginActivity.class);
-                startActivity(LoginIntent);
-                break;
-            case R.id.btn_changeMyName://修改昵称事件
-                if (!app.getUser().getUserId().equals("")) {
-                    AlertDialog.Builder CMNbuilder = new AlertDialog.Builder(mContext);
-                    CMNbuilder.setTitle("修改昵称");
-                    CMNbuilder.setMessage("填入新昵称：");
-                    final EditText newName = new EditText(mContext);
-                    newName.setInputType(InputType.TYPE_CLASS_TEXT);
-                    CMNbuilder.setView(newName);
-                    CMNbuilder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!newName.getText().toString().equals("")) {
-                                //修改数据库中的昵称
-                                app.getUser().setUserName(newName.getText().toString());
-                                ChangeNameTask changeNameTask = new ChangeNameTask();
-                                changeNameTask.setOnChangePwdResultListener(MyInfoFragment.this);
-                                changeNameTask.execute(new User(app.getUser()));
-                            } else {
-                                Toast.makeText(mContext, "输入不能为空！",
+        if (v.getId() == R.id.btn_login) {//登陆事件或者注销事件
+            Intent LoginIntent = new Intent(mContext, LoginActivity.class);
+            startActivity(LoginIntent);
+        } else if (v.getId() == R.id.btn_changeMyName) {//修改昵称事件
+            if (!app.getUser().getUserId().equals("")) {
+                AlertDialog.Builder CMNbuilder = new AlertDialog.Builder(mContext);
+                CMNbuilder.setTitle("修改昵称");
+                CMNbuilder.setMessage("填入新昵称：");
+                final EditText newName = new EditText(mContext);
+                newName.setInputType(InputType.TYPE_CLASS_TEXT);
+                CMNbuilder.setView(newName);
+                CMNbuilder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (!newName.getText().toString().equals("")) {
+                            //修改数据库中的昵称
+                            app.getUser().setUserName(newName.getText().toString());
+                            ChangeNameTask changeNameTask = new ChangeNameTask();
+                            changeNameTask.setOnChangePwdResultListener(MyInfoFragment.this);
+                            changeNameTask.execute(new User(app.getUser()));
+                        } else {
+                            Toast.makeText(mContext, "输入不能为空！",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                CMNbuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                CMNbuilder.show();
+            } else {
+                AlertDialogUtil.show(getActivity(), "您还没有登录");
+            }
+        } else if (v.getId() == R.id.btn_changePassword) {//修改密码事件
+            if (!app.getUser().getUserId().equals("")) {
+                Intent changePwd = new Intent(mContext, ChangePwdActivity.class);
+                startActivity(changePwd);
+            } else {
+                AlertDialogUtil.show(getActivity(), "您还没有登录");
+            }
+        } else if (v.getId() == R.id.btn_displayFriends) {//显示好友事件
+            if(!app.getUser().getUserId().equals("")){
+                Intent displayFriends = new Intent(mContext, DisplayFriendsActivity.class);
+                startActivity(displayFriends);
+            }else{
+                AlertDialogUtil.show(getActivity(),"您还没有登陆");
+            }
+        } else if (v.getId() == R.id.btn_addFriend) {//加好友事件
+            if (!app.getUser().getUserId().equals("")) {
+                AlertDialog.Builder AFbuilder = new AlertDialog.Builder(mContext);
+                AFbuilder.setTitle("加朋友");
+                AFbuilder.setMessage("填入朋友ID：");
+                friendId = new EditText(mContext);
+                friendId.setInputType(InputType.TYPE_CLASS_TEXT);
+                AFbuilder.setView(friendId);
+                AFbuilder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (!friendId.getText().toString().equals("")) {
+                            if(!friendId.getText().toString().equals(app.getUser().getUserId())) {
+                                // 检查该ID是否已存在
+                                CheckIDExistTask checkIDExistTask = new CheckIDExistTask();
+                                checkIDExistTask.setOnCheckIdResultListener(MyInfoFragment.this);
+                                checkIDExistTask.execute(friendId.getText().toString());
+                            }else{
+                                Toast.makeText(mContext, "不能加自己为好友哦",
                                         Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            AlertDialogUtil.show(getActivity(), "输入不能为空");
                         }
-                    });
-                    CMNbuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    CMNbuilder.show();
-                } else {
-                    AlertDialogUtil.show(getActivity(), "您还没有登录");
-                }
-                break;
-            case R.id.btn_changePassword://修改密码事件
-                if (!app.getUser().getUserId().equals("")) {
-                    Intent changePwd = new Intent(mContext, ChangePwdActivity.class);
-                    startActivity(changePwd);
-                } else {
-                    AlertDialogUtil.show(getActivity(), "您还没有登录");
-                }
-                break;
-            case R.id.btn_displayFriends://显示好友事件
-                if(!app.getUser().getUserId().equals("")){
-                    Intent displayFriends = new Intent(mContext, DisplayFriendsActivity.class);
-                    startActivity(displayFriends);
-                }else{
-                    AlertDialogUtil.show(getActivity(),"您还没有登陆");
-                }
-                break;
-            case R.id.btn_addFriend://加好友事件
-                if (!app.getUser().getUserId().equals("")) {
-                    AlertDialog.Builder AFbuilder = new AlertDialog.Builder(mContext);
-                    AFbuilder.setTitle("加朋友");
-                    AFbuilder.setMessage("填入朋友ID：");
-                    friendId = new EditText(mContext);
-                    friendId.setInputType(InputType.TYPE_CLASS_TEXT);
-                    AFbuilder.setView(friendId);
-                    AFbuilder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!friendId.getText().toString().equals("")) {
-                                if(!friendId.getText().toString().equals(app.getUser().getUserId())) {
-                                    // 检查该ID是否已存在
-                                    CheckIDExistTask checkIDExistTask = new CheckIDExistTask();
-                                    checkIDExistTask.setOnCheckIdResultListener(MyInfoFragment.this);
-                                    checkIDExistTask.execute(friendId.getText().toString());
-                                }else{
-                                    Toast.makeText(mContext, "不能加自己为好友哦",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                AlertDialogUtil.show(getActivity(), "输入不能为空");
-                            }
-                        }
-                    });
-                    AFbuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    AFbuilder.show();
-                }else{
-                    AlertDialogUtil.show(getActivity(),"您还没有登录");
-                }
-                break;
-            case R.id.btn_settings://设置事件
-                Intent settingIntent = new Intent(mContext, SettingActivity.class);
-                startActivity(settingIntent);
-                break;
+                    }
+                });
+                AFbuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AFbuilder.show();
+            }else{
+                AlertDialogUtil.show(getActivity(), "您还没有登录");
+            }
+        } else if (v.getId() == R.id.btn_settings) {//设置事件
+            Intent settingIntent = new Intent(mContext, SettingActivity.class);
+            startActivity(settingIntent);
         }
     }
 

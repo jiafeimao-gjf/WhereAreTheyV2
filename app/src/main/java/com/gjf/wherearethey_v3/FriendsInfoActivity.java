@@ -89,99 +89,96 @@ public class FriendsInfoActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_sendMsg:
-                //进入发送聊天室活动页
-                AlertDialog.Builder msgDialog = new AlertDialog.Builder(this);
-                msgDialog.setMessage("填写发送消息：");
-                final EditText et_message = new EditText(this);
-                msgDialog.setView(et_message);
-                msgDialog.setPositiveButton("发送", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!et_message.getText().toString().equals("")){
-                            SendMsgTask sendMsgTask = new SendMsgTask();
-                            sendMsgTask.setOnInsertMsgResultListener(new SendMsgTask.OnInsertMsgResultListener() {
-                                @Override
-                                public void onGetSMTResult(String res) {
-                                    if (res.equals("success")) {
-                                        Toast.makeText(FriendsInfoActivity.this,
-                                                "消息已发送", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(FriendsInfoActivity.this, res,
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                            MessageIO messageIO = new MessageIO(
-                                    app.getUser().getUserId(), friendInfo.get(0),
-                                    et_message.getText().toString(), "normal");
-                            messageIO.encrypt();//加密
-                            sendMsgTask.execute(messageIO);
-                        }else{
-                            Toast.makeText(FriendsInfoActivity.this,
-                                    "不能发送空消息", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                msgDialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) { }
-                });
-                msgDialog.show();
-                break;
-            case R.id.btn_deleteFriends:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("你要删除该好友吗？");
-                builder.setMessage(friendInfo.get(1));
-                builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //将该好友从公网数据库中删除
-                        DeleteFriendTask deleteFriendTask = new DeleteFriendTask();
-                        deleteFriendTask.setOnDeleteFriendResultListener(
-                                new DeleteFriendTask.OnDeleteFriendResultListener() {
-                                    @Override
-                                    public void onGetDFTResult(String res) {
-                                        Toast.makeText(FriendsInfoActivity.this, res,
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        deleteFriendTask.execute(new Friends(app.getUser().getUserId(),friendInfo.get(0)));
-                        //发送解除好友关系信息给对方
+        if (v.getId() == R.id.btn_sendMsg) {
+            //进入发送聊天室活动页
+            AlertDialog.Builder msgDialog = new AlertDialog.Builder(this);
+            msgDialog.setMessage("填写发送消息：");
+            final EditText et_message = new EditText(this);
+            msgDialog.setView(et_message);
+            msgDialog.setPositiveButton("发送", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (!et_message.getText().toString().equals("")){
                         SendMsgTask sendMsgTask = new SendMsgTask();
                         sendMsgTask.setOnInsertMsgResultListener(new SendMsgTask.OnInsertMsgResultListener() {
                             @Override
                             public void onGetSMTResult(String res) {
-                                if(res.equals("success")){
+                                if (res.equals("success")) {
                                     Toast.makeText(FriendsInfoActivity.this,
-                                            "已告知对方，解除好友关系",
-                                            Toast.LENGTH_SHORT).show();
-                                }else {
+                                            "消息已发送", Toast.LENGTH_SHORT).show();
+                                } else {
                                     Toast.makeText(FriendsInfoActivity.this, res,
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                        MessageIO messageIO = new MessageIO();
-                        messageIO.setSrcId(app.getUser().getUserId());
-                        messageIO.setDestId(friendInfo.get(0));
-                        messageIO.setMessage(app.getUser().getUserId()+"和你解除了好友关系");
-                        messageIO.setTime(new Date());
-                        messageIO.setMsgType("delete");
+                        MessageIO messageIO = new MessageIO(
+                                app.getUser().getUserId(), friendInfo.get(0),
+                                et_message.getText().toString(), "normal");
                         messageIO.encrypt();//加密
                         sendMsgTask.execute(messageIO);
-                        //从列表删除
-                        app.getFriends().remove(position);
+                    }else{
+                        Toast.makeText(FriendsInfoActivity.this,
+                                "不能发送空消息", Toast.LENGTH_SHORT).show();
                     }
-                });
-                builder.setNegativeButton("不删除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
-                break;
+                }
+            });
+            msgDialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) { }
+            });
+            msgDialog.show();
+        } else if (v.getId() == R.id.btn_deleteFriends) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("你要删除该好友吗？");
+            builder.setMessage(friendInfo.get(1));
+            builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //将该好友从公网数据库中删除
+                    DeleteFriendTask deleteFriendTask = new DeleteFriendTask();
+                    deleteFriendTask.setOnDeleteFriendResultListener(
+                            new DeleteFriendTask.OnDeleteFriendResultListener() {
+                                @Override
+                                public void onGetDFTResult(String res) {
+                                    Toast.makeText(FriendsInfoActivity.this, res,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    deleteFriendTask.execute(new Friends(app.getUser().getUserId(),friendInfo.get(0)));
+                    //发送解除好友关系信息给对方
+                    SendMsgTask sendMsgTask = new SendMsgTask();
+                    sendMsgTask.setOnInsertMsgResultListener(new SendMsgTask.OnInsertMsgResultListener() {
+                        @Override
+                        public void onGetSMTResult(String res) {
+                            if(res.equals("success")){
+                                Toast.makeText(FriendsInfoActivity.this,
+                                        "已告知对方，解除好友关系",
+                                        Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(FriendsInfoActivity.this, res,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    MessageIO messageIO = new MessageIO();
+                    messageIO.setSrcId(app.getUser().getUserId());
+                    messageIO.setDestId(friendInfo.get(0));
+                    messageIO.setMessage(app.getUser().getUserId()+"和你解除了好友关系");
+                    messageIO.setTime(new Date());
+                    messageIO.setMsgType("delete");
+                    messageIO.encrypt();//加密
+                    sendMsgTask.execute(messageIO);
+                    //从列表删除
+                    app.getFriends().remove(position);
+                }
+            });
+            builder.setNegativeButton("不删除", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.show();
         }
     }
 

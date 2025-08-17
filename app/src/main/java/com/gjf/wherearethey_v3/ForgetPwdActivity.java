@@ -60,24 +60,22 @@ public class ForgetPwdActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_textA:
-                if(user.getUserId().equals("")){
-                    Toast.makeText(this, user.getUserType(), Toast.LENGTH_SHORT).show();
-                }else{
-                    if(!et_pwdProtectA.getText().toString().equals("")){
-                        //验证密保答案的真确性
-                        if(et_pwdProtectA.getText().toString().equals(user.getPwdProtectA())){
-                            String desc = "答案正确。\n你的密码是："+user.getPassword();
-                            AlertDialogUtil.show(this,desc);
-                        }else{
-                            AlertDialogUtil.show(this,"答案错误。");
-                        }
+        if (v.getId() == R.id.btn_textA) {
+            if(user.getUserId().equals("")){
+                Toast.makeText(this, user.getUserType(), Toast.LENGTH_SHORT).show();
+            }else{
+                if(!et_pwdProtectA.getText().toString().equals("")){
+                    //验证密保答案的真确性
+                    if(et_pwdProtectA.getText().toString().equals(user.getPwdProtectA())){
+                        String desc = "答案正确。\n你的密码是："+user.getPassword();
+                        AlertDialogUtil.show(this,desc);
                     }else{
-                        AlertDialogUtil.show(ForgetPwdActivity.this,"答案不能为空");
+                        AlertDialogUtil.show(this,"答案错误。");
                     }
+                }else{
+                    AlertDialogUtil.show(ForgetPwdActivity.this,"答案不能为空");
                 }
-                break;
+            }
         }
     }
 

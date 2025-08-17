@@ -209,55 +209,51 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_loginConfirm:
-                if (!isAnyEmpty()) {
-                    if (!isOnline) {
-                        btn_loginConfirm.setEnabled(false);
-                        User user = new User();
-                        user.setUserId(et_userId.getText().toString());
-                        user.setPassword(et_password.getText().toString());
-                        LoginTask logintask = new LoginTask();
-                        logintask.setOnLoginResultListener(this);
-                        logintask.execute(user);
-                    } else {
-                        app.setUser(new User());
-                        app.setFriends(new ArrayList<Friends>());
-                        app.setMessages(new ArrayList<MessageIO>());
-                        app.setNowLocations(new ArrayList<NowLocation>());
-                        Toast.makeText(LoginActivity.this, "注销成功",
-                                Toast.LENGTH_SHORT).show();
-                        app.getTga().finish();
-                        if (!mShare.readStringShared("isRemember", "").equals("yes")) {
-                            et_password.setText("");
-                        }
-                        btn_loginConfirm.setText("登录");
-                        isOnline = false;
+        if (v.getId() == R.id.btn_loginConfirm) {
+            if (!isAnyEmpty()) {
+                if (!isOnline) {
+                    btn_loginConfirm.setEnabled(false);
+                    User user = new User();
+                    user.setUserId(et_userId.getText().toString());
+                    user.setPassword(et_password.getText().toString());
+                    LoginTask logintask = new LoginTask();
+                    logintask.setOnLoginResultListener(this);
+                    logintask.execute(user);
+                } else {
+                    app.setUser(new User());
+                    app.setFriends(new ArrayList<Friends>());
+                    app.setMessages(new ArrayList<MessageIO>());
+                    app.setNowLocations(new ArrayList<NowLocation>());
+                    Toast.makeText(LoginActivity.this, "注销成功",
+                            Toast.LENGTH_SHORT).show();
+                    app.getTga().finish();
+                    if (!mShare.readStringShared("isRemember", "").equals("yes")) {
+                        et_password.setText("");
                     }
-                } else {
-                    AlertDialogUtil.show(LoginActivity.this,
-                            "用户名和密码任何一项不能为空！");
+                    btn_loginConfirm.setText("登录");
+                    isOnline = false;
                 }
-                //成功就finish，失败弹出提示
-                break;
-            case R.id.btn_register://注册事件
-                if (app.getUser().getUserId().equals("")) {
-                    Intent registerIntent = new Intent(this, RegisterActivity.class);
-                    startActivity(registerIntent);
-                } else {
-                    Toast.makeText(this, "您已登录，请先注销，再注册！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.btn_forgetPassword://忘记密码事件
-                if (!et_userId.getText().toString().equals("")) {
-                    Intent forgetPwdIntent = new Intent(this, ForgetPwdActivity.class);
-                    forgetPwdIntent.putExtra("userId", et_userId.getText().toString());
-                    startActivity(forgetPwdIntent);
-                } else {
-                    AlertDialogUtil.show(LoginActivity.this,
-                            "要输入用户名才能去重置密码");
-                }
-                break;
+            } else {
+                AlertDialogUtil.show(LoginActivity.this,
+                        "用户名和密码任何一项不能为空！");
+            }
+            //成功就finish，失败弹出提示
+        } else if (v.getId() == R.id.btn_register) {//注册事件
+            if (app.getUser().getUserId().equals("")) {
+                Intent registerIntent = new Intent(this, RegisterActivity.class);
+                startActivity(registerIntent);
+            } else {
+                Toast.makeText(this, "您已登录，请先注销，再注册！", Toast.LENGTH_SHORT).show();
+            }
+        } else if (v.getId() == R.id.btn_forgetPassword) {//忘记密码事件
+            if (!et_userId.getText().toString().equals("")) {
+                Intent forgetPwdIntent = new Intent(this, ForgetPwdActivity.class);
+                forgetPwdIntent.putExtra("userId", et_userId.getText().toString());
+                startActivity(forgetPwdIntent);
+            } else {
+                AlertDialogUtil.show(LoginActivity.this,
+                        "要输入用户名才能去重置密码");
+            }
         }
     }
 

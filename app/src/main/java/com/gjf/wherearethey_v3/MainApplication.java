@@ -144,7 +144,7 @@ public class MainApplication extends Application {
 
     public void intBaiduMap() {
         LogUtil.i(TAG, "[intBaiduMap] this = " + this.hashCode());
-        if (SharedUtil.getInstance(STATIC_PRIVACY_SP).readBooleanShared(STATIC_PRIVACY_SP_KEY, false)) {
+        if (SharedUtil.getInstance(STATIC_PRIVACY_SP).readBooleanShared(STATIC_PRIVACY_SP_KEY, true)) {
             SDKInitializer.setAgreePrivacy(mBase, true);
             //在使用SDK各组件之前初始化context信息，传入ApplicationContext
             SDKInitializer.initialize(mBase);

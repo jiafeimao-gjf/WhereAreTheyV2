@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedUtil.getInstance(STATIC_PRIVACY_SP).writeBooleanShared(STATIC_PRIVACY_SP_KEY, true, new SharedUtil.FinishCallback() {
                     @Override
                     public void finishSpWrite() {
-                        MainApplication.getInstance().intBaiduMap();
+                        // 不再需要手动调用intBaiduMap()，因为已经在MainApplication.onCreate()中处理了
                         mHandler.postDelayed(jumpTask, 1000);
                     }
                 });

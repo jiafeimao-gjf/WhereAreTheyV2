@@ -66,30 +66,28 @@ public class ChangePwdActivity extends AppCompatActivity
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_pwdChangeConfirm:
-                if(!isAnyEmpty()){
-                    if(et_newPassword.getText().toString().
-                            equals(et_cfNewPassword.getText().toString())){
-                        if(!et_newPassword.getText().toString().
-                                equals(app.getUser().getPassword())){
-                            //修改数据库中的密码
-                            app.getUser().setPassword(et_cfNewPassword.getText().toString());
-                            ChangePwdTask changePwdTask = new ChangePwdTask();
-                            changePwdTask.setOnChangePwdResultListener(this);
-                            User user = new User(app.getUser());
-                            user.encrypt();//加密
-                            changePwdTask.execute(user);
-                        }else{
-                            AlertDialogUtil.show(this,"新密码和旧密码不能一样哦！");
-                        }
-                    }else{
-                        AlertDialogUtil.show(this,"密码和验证密码不一致");
+        if (v.getId() == R.id.btn_pwdChangeConfirm) {
+            if (!isAnyEmpty()) {
+                if (et_newPassword.getText().toString().
+                        equals(et_cfNewPassword.getText().toString())) {
+                    if (!et_newPassword.getText().toString().
+                            equals(app.getUser().getPassword())) {
+                        //修改数据库中的密码
+                        app.getUser().setPassword(et_cfNewPassword.getText().toString());
+                        ChangePwdTask changePwdTask = new ChangePwdTask();
+                        changePwdTask.setOnChangePwdResultListener(this);
+                        User user = new User(app.getUser());
+                        user.encrypt();//加密
+                        changePwdTask.execute(user);
+                    } else {
+                        AlertDialogUtil.show(this, "新密码和旧密码不能一样哦！");
                     }
-                }else {
-                    AlertDialogUtil.show(this,"密码和验证密码任何一项不能为空");
+                } else {
+                    AlertDialogUtil.show(this, "密码和验证密码不一致");
                 }
-                break;
+            } else {
+                AlertDialogUtil.show(this, "密码和验证密码任何一项不能为空");
+            }
         }
     }
 
