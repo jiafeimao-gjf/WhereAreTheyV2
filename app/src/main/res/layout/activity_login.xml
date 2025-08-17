@@ -6,77 +6,70 @@
     android:layout_height="match_parent"
     android:background="@color/warm_background"
     tools:context=".LoginActivity">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="24dp">
 
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center"
-            android:src="@drawable/icon"
-            android:contentDescription="@string/icon"
             android:layout_marginBottom="32dp"
-            android:elevation="8dp"/>
+            android:contentDescription="@string/icon"
+            android:elevation="8dp"
+            android:src="@drawable/icon" />
 
-        <android.support.v7.widget.CardView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp">
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/et_userId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="left|center"
+                android:hint="@string/yourId"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/warm_text"
+                android:textColorHint="@color/grey" />
 
-                <EditText
-                    android:id="@+id/et_userId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/yourId"
-                    android:gravity="left|center"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:maxLength="20"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:textColor="@color/warm_text"
-                    android:textColorHint="@color/grey"/>
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="left|center"
+                android:hint="@string/yourPassword"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/warm_text"
+                android:textColorHint="@color/grey" />
 
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="left|center"
-                    android:hint="@string/yourPassword"
-                    android:inputType="textPassword"
-                    android:maxLength="20"
-                    android:maxLines="1"
-                    android:textColor="@color/warm_text"
-                    android:textColorHint="@color/grey"/>
+            <CheckBox
+                android:id="@+id/cb_isRememberPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="记住密码"
+                android:textColor="@color/warm_text"
+                android:textSize="16sp" />
 
-                <CheckBox
-                    android:id="@+id/cb_isRememberPwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="记住密码"
-                    android:textColor="@color/warm_text"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="8dp"/>
+        </LinearLayout>
 
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -89,10 +82,10 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/button_warm_selector"
+                android:elevation="4dp"
                 android:text="@string/register_button"
-                android:textSize="16sp"
                 android:textColor="@color/warm_text"
-                android:elevation="4dp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_loginConfirm"
@@ -100,11 +93,11 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="@drawable/button_warm_selector"
+                android:elevation="4dp"
                 android:text="@string/login_button"
                 android:textColor="@color/warm_text"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:elevation="4dp"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_forgetPassword"
@@ -112,10 +105,10 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/button_warm_selector"
+                android:elevation="4dp"
                 android:text="@string/forgetPwd_button"
-                android:textSize="16sp"
                 android:textColor="@color/warm_text"
-                android:elevation="4dp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
