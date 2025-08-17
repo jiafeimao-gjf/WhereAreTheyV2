@@ -94,7 +94,9 @@ public class LocationFragment extends Fragment implements AdapterView.OnItemSele
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LogUtil.i(TAG, "[onCreateView]");
-        mContext = getActivity();
+        if (isAdded()) {
+            mContext = getActivity();
+        }
         app = MainApplication.getInstance();
         nowLocation = new NowLocation();
         LocationClientOption option = new LocationClientOption();
