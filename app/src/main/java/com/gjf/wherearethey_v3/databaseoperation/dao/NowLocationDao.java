@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  * @author gjf
  * @version 1.0
  */
-public class NowLocationDao {
+public class NowLocationDao implements INowLocationDao {
     private static NowLocationDao nowLocationDao;   //唯一实例
     private static Connection conn;
     private static PreparedStatement ps;

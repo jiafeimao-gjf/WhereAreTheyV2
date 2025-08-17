@@ -3,7 +3,8 @@ package com.gjf.wherearethey_v3.task;
 import android.os.AsyncTask;
 
 import com.gjf.wherearethey_v3.bean.User;
-import com.gjf.wherearethey_v3.databaseoperation.dao.UserDao;
+import com.gjf.wherearethey_v3.databaseoperation.dao.IUserDao;
+import com.gjf.wherearethey_v3.databaseoperation.factory.DaoFactory;
 
 /**
  * 登陆的异步任务类
@@ -11,10 +12,10 @@ import com.gjf.wherearethey_v3.databaseoperation.dao.UserDao;
  * @version 1.0
  */
 public class LoginTask extends AsyncTask<User,Void,User> {
-    private UserDao userDao;
+    private IUserDao userDao;
     public LoginTask(){
         super();
-        userDao = UserDao.getInstance();
+        userDao = DaoFactory.getUserDao();
     }
 
     @Override

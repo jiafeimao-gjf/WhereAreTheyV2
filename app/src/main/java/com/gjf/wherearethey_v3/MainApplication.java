@@ -16,6 +16,7 @@ import com.gjf.wherearethey_v3.bean.User;
 import com.gjf.wherearethey_v3.encrypt.AesUtil;
 import com.gjf.wherearethey_v3.util.LogUtil;
 import com.gjf.wherearethey_v3.util.SharedUtil;
+import com.gjf.wherearethey_v3.databaseoperation.factory.DaoFactory;
 
 import java.util.ArrayList;
 
@@ -149,6 +150,9 @@ public class MainApplication extends Application {
             SDKInitializer.initialize(mBase);
             LocationClient.setAgreePrivacy(true);
         }
+        SDKInitializer.initialize(getApplicationContext());
+        // Initialize the DAO factory
+        DaoFactory.initialize(this);
     }
 
     private String getUrl() {

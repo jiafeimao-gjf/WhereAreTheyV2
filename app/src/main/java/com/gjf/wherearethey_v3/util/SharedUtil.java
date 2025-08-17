@@ -58,6 +58,14 @@ public class SharedUtil {
 		finishCallback.finishSpWrite();
 	}
 
+	public String readShared(String dbImplType, String implTypeJdbc) {
+		return null;
+	}
+
+	public void writeShared(String dbImplType, String implType) {
+
+	}
+
 
 	public interface FinishCallback {
 		void finishSpWrite();

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author gjf
  * @version 1.0
  */
-public class FriendsDao {
+public class FriendsDao implements IFriendsDao {
     private static FriendsDao friendsDao;
     private static Connection conn;
     private static PreparedStatement ps;
